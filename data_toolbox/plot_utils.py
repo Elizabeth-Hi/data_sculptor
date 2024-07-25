@@ -1,6 +1,7 @@
 
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def create_dual_y_axis_plot_matplotlib(x, y1, y2, y1_label='Y1 Axis', y2_label='Y2 Axis', x_label='X Axis', title='Dual Y Axis Plot'):
@@ -111,3 +112,47 @@ def create_dual_y_axis_plot_plotly(x, y1, y2, y1_label='Y1 Axis', y2_label='Y2 A
     )
 
     return fig
+
+
+def boxplot_by_column(data: pd.DataFrame, group_col: str, check_col: str):
+    """
+    Draws a boxplot for the specified column, grouped by another column.
+
+    Args:
+        data (pd.DataFrame): The input data frame containing the data.
+        group_col (str): The column name to group by (e.g., date).
+        check_col (str): The column name for which the boxplot is to be drawn.
+
+    Notes:
+        - The figure width is automatically adjusted based on the length of x-axis labels to ensure they fit within the 
+          plot. The width adjustment factor is determined by the length of the longest label.
+        - If any x-axis label exceeds a certain length (default is 10 characters), the labels are rotated 90 degrees
+          to improve readability.
+    """
+    # Create subplots
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    # Draw the boxplot
+    data.boxplot(column=check_col, by=group_col, ax=ax1)
+    ax1.set_xlabel(group_col.capitalize())
+    ax1.set_ylabel(check_col.capitalize())
+    ax1.set_title(f'Boxplot of {check_col.capitalize()} by {group_col.capitalize()}')
+
+    # Get current x-tick labels
+    labels = [item.get_text() for item in ax1.get_xticklabels()]
+
+    # Calculate maximum label length
+    max_label_length = max(len(label) for label in labels)
+
+    # Adjust figure size based on the maximum label length
+    fig_width = 10 + max_label_length * 0.2 
+    fig.set_size_inches(fig_width, 6)
+
+    # Rotate x-axis labels if any label is particularly long
+    max_label_length = max(len(label) for label in labels)
+    if max_label_length > 10:  
+        plt.xticks(rotation=90)
+        
+    # Remove the default 'Boxplot' title
+    plt.suptitle('')
+    plt.show()
