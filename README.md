@@ -10,3 +10,10 @@ Toolbox for data visualization
 ## db_utils
 - influxDB
 - mongoDB
+
+## file_utils
+- get files based on suffix
+- extract text from pptx
+- extract text from word
+- extract text from pdf
+- copy files to destination path
