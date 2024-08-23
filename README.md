@@ -1,5 +1,5 @@
 # data_sculptor
-[CN](https://github.com/Elizabeth-Hi/data_sculptor/blob/main/README_cn.md)
+[CN](README_cn.md)<br>
 My toolbox for data analysis.                                     
 
 ## plot_utils
