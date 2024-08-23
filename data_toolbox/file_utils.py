@@ -2,6 +2,8 @@ import os
 import pptx
 from docx import Document
 import PyPDF2
+import shutil
+import os
 
 
 def get_all_suffix_files(directory, suffix='.csv'):
@@ -106,3 +108,26 @@ def read_pdf_document(file_path):
         return None
 
     return text_list
+
+
+def copy_files(file_list, destination_path) -> None:
+    """
+    Copies all files in the provided list to the specified destination path.
+
+    Args:
+        file_list (List[str]): A list of file paths to be copied.
+        destination_path (str): The destination directory where the files will be copied.
+
+    Returns:
+        None
+    """
+    os.makedirs(destination_path, exist_ok=True)
+
+    for file_path in file_list:
+        if os.path.isfile(file_path):
+            # Copy the file to the destination directory.
+            shutil.copy(file_path, destination_path)
+            print(f"Copied: {file_path} -> {destination_path}")
+        else:
+            # If the file does not exist, print a message.
+            print(f"File not found: {file_path}")
